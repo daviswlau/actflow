@@ -3,3 +3,8 @@ target
 .classpath
 .project
 .git
+bin
+.idea
+*.iml
+*.ipr
+*.iws
