@@ -3,8 +3,8 @@ package org.actflow.platform.engine.akkaspringfactory;
 import akka.actor.ActorSystem;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import com.wanda.tms.plugincore.util.StringUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

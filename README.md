@@ -3,6 +3,9 @@ ActorFlowEngine
 
 A light & fastest work flow with Actor pattern.
 
+environment
+JDK1.8
+
 to build
 mvn clean package install
 

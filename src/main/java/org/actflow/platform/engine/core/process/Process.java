@@ -14,10 +14,10 @@ import org.actflow.platform.engine.akkaspringfactory.Actor;
 import org.actflow.platform.engine.core.service.EngineDefinitionLoaderService;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.enums.ActionTypeEnum;
+import org.actflow.platform.engine.enums.MessageStatus;
 import org.actflow.platform.engine.enums.ProcessEventEnum;
 import org.actflow.platform.engine.enums.ProcessTypeEnum;
 import org.actflow.platform.engine.xstream.definition.ActionNode;
-import org.actflow.platform.enums.MessageStatus;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;

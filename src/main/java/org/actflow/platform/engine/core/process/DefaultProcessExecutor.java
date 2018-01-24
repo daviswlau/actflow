@@ -29,7 +29,7 @@ import org.actflow.platform.engine.enums.ProcessTypeEnum;
 import org.actflow.platform.engine.exception.EngineException;
 import org.actflow.platform.engine.xstream.definition.ActionNode;
 import org.actflow.platform.engine.xstream.definition.ProcessNode;
-import org.actflow.platform.enums.MessageStatus;
+import org.actflow.platform.engine.enums.MessageStatus;
 
 import akka.actor.ActorRef;
 import static akka.pattern.Patterns.ask;

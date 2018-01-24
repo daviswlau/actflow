@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,7 @@ import org.actflow.platform.http.client.*;
 
 
 /**
- * @author: lvyong6
+ * @author: Davis Lau
  */
 public class HttpClientUtil {
 

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import org.actflow.platform.common.utils.CollectionUtils;
+import org.actflow.platform.engine.utils.CollectionUtils;
 import org.actflow.platform.engine.xstream.definition.TradeEngine;
 import org.actflow.platform.engine.xstream.definition.ActionNode;
 import org.actflow.platform.engine.xstream.definition.EngineDefinition;
