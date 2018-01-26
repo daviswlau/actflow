@@ -16,6 +16,6 @@ to use
 	<version>1.0.0-SNAPSHOT</version>
 </dependency>
 
-the cluster configuration, pls view 'akkaActor-cluster.conf'
+the cluster configuration, pls view 'resources/akkaActor-cluster.conf'
 
-the flow sample, pls view 'flow-sample.xml'
+the flow sample, pls view 'engines/flow-sample.xml'
