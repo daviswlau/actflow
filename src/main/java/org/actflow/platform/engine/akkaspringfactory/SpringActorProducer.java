@@ -6,6 +6,9 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * Spring indirect actor producer
+ * 
+ * @author Davis Lau
+ * 
  */
 public class SpringActorProducer implements IndirectActorProducer {
 	final ApplicationContext applicationContext;

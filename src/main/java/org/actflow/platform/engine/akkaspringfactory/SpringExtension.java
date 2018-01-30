@@ -10,6 +10,9 @@ import org.springframework.context.ApplicationContext;
 
 /**
  * An Akka Extension to provide access to Spring managed Actor Beans.
+ * 
+ * @author Davis Lau
+ * 
  */
 public class SpringExtension extends
 		AbstractExtensionId<SpringExtension.SpringExt> {
