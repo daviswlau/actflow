@@ -7,18 +7,18 @@
 	<definition>
 		
 		
-        <process id="ptest" type="parallel" messageClass="com.custom.message1">
+        <process id="ptest" type="parallel" dataClass="org.actflow.platform.engine.dto.ProcessMessage">
                 <action id="pa1" type="class" handle="org.actflow.platform.engine.biz.test.TestAction1"/>
                 <action id="pa2" type="bean" handle="yourSpringBean"/>
                 <action id="pa3" type="class" handle="org.actflow.platform.engine.biz.test.TestAction3"/>
         </process>
-        <process id="stest" type="sequence" actionTries="1" messageClass="com.custom.message2">
+        <process id="stest" type="sequence" actionTries="1" dataClass="com.custom.message2">
                 <action id="sa1" type="class" handle="org.actflow.platform.engine.biz.test.TestAction1"/>
                 <action id="sa2" type="class" handle="org.actflow.platform.engine.biz.test.TestAction2"/>
                 <action id="sa3" type="bean" handle="yourSpringBean"/>
         </process>
         
-        <process id="skuApicall" type="sequence" actionTries="3"  messageClass="com.custom.message1">
+        <process id="skuApicall" type="sequence" actionTries="3"  dataClass="com.custom.message1">
 			<action id="skuApi" type="service" httpMethod="post" handle="${skuApiUrl}"/>
 		</process>
 		

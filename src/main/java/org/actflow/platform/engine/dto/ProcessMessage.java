@@ -10,9 +10,11 @@ package org.actflow.platform.engine.dto;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSON;
+
 /** 
  * @ClassName: ProcessMessage
- * @Description: 流程消息
+ * @Description: 流程消息, dataClass定制消息类型，可以将data字段json对象转换为dataClass对象
  * @author Davis Lau
  * @date 2016年9月26日 上午9:56:43
  */
@@ -30,6 +32,7 @@ public class ProcessMessage implements Cloneable, Serializable {
     //内容
     private String status;
     private String message;
+    private String dataClass;
     private String data;
 
     /**
@@ -129,6 +132,14 @@ public class ProcessMessage implements Cloneable, Serializable {
 		this.tradeCode = tradeCode;
 	}
 	
+	public String getDataClass() {
+		return dataClass;
+	}
+	
+	public void setDataClass(String dataClass) {
+		this.dataClass = dataClass;
+	}
+	
 	@Override
 	public ProcessMessage clone() throws CloneNotSupportedException {
 //		super.clone();
@@ -142,8 +153,15 @@ public class ProcessMessage implements Cloneable, Serializable {
 		clonemessag.setStatus(status);
 		clonemessag.setMessage(message);
 		clonemessag.setData(data);
+		clonemessag.setDataClass(dataClass);
 		
 		return clonemessag;
+	}
+	
+	public Object toObject() throws ClassNotFoundException {
+		Class<?> clz = Class.forName(dataClass);
+        Object obj = JSON.parseObject(data, clz);
+        return obj;
 	}
 
 }

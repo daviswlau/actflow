@@ -36,7 +36,7 @@ public class ProcessNode {
     public int actionTries = 0;
     
     @XStreamAsAttribute
-    public String messageClass;
+    public String dataClass;
     
     @XStreamAsAttribute
     public boolean autoRollback = false;
