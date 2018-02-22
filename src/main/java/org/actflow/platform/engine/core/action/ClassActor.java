@@ -8,15 +8,15 @@
  */
 package org.actflow.platform.engine.core.action;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 
 import org.actflow.platform.engine.akkaspringfactory.Actor;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.exception.ActionExecutionException;
 import org.actflow.platform.engine.exception.RetryLaterException;
-import org.actflow.platform.engine.exception.RetryLaterException.Method;
 
 /** 
  * @ClassName: ClassActor
@@ -27,6 +27,9 @@ import org.actflow.platform.engine.exception.RetryLaterException.Method;
 @Actor
 public class ClassActor extends AbstractActionActor {
     private final static Logger logger = LoggerFactory.getLogger(ClassActor.class);
+    
+    @Inject
+    private ClassAction classAction;
 
     /*
      * (non-Javadoc)
@@ -36,35 +39,36 @@ public class ClassActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-    	ProcessMessage result = null;
-        try {
-            Class<?> clz = Class.forName(getActionNode().handle);
-            Object obj = clz.newInstance();
-            if (obj instanceof ActionExecutor) {
-            	ActionExecutor action = (ActionExecutor) obj;
-                if (StringUtils.isNotBlank(getActionNode().name)) {
-                    action.inject(getActionNode().name);
-                }
-                result = action.handle(context);
-            }
-//            logger.info("[ClassActor handle]调用成功: {}, {}", getActionNode().handle, result);
-        } catch (Exception e) {
-            String errMsg = String.format("[ClassActor handle][%s]调用异常，参数: %s, 返回信息:%s", getActionNode().handle, context, result);
-            logger.error(errMsg, e);
-            //throw new ActionExecutionException(e.getMessage());
-
-            RetryLaterException later = new RetryLaterException(errMsg);
-            later.setMethod(Method.LINEAR);
-            later.setDelay(RetryLaterException.DEFAULT_DELAY);
-            
-            //是否可以单独rollback
-            if (getActionNode().soloRollback && StringUtils.isNotBlank(getActionNode().rollback)) {
-            	later.setRollBack(true); 
-            }
-            
-            throw later;
-        }
-        return result;
+//    	ProcessMessage result = null;
+//        try {
+//            Class<?> clz = Class.forName(getActionNode().handle);
+//            Object obj = clz.newInstance();
+//            if (obj instanceof ActionExecutor) {
+//            	ActionExecutor action = (ActionExecutor) obj;
+//                if (StringUtils.isNotBlank(getActionNode().name)) {
+//                    action.inject(getActionNode().name);
+//                }
+//                result = action.handle(context);
+//            }
+////            logger.info("[ClassActor handle]调用成功: {}, {}", getActionNode().handle, result);
+//        } catch (Exception e) {
+//            String errMsg = String.format("[ClassActor handle][%s]调用异常，参数: %s, 返回信息:%s", getActionNode().handle, context, result);
+//            logger.error(errMsg, e);
+//            //throw new ActionExecutionException(e.getMessage());
+//
+//            RetryLaterException later = new RetryLaterException(errMsg);
+//            later.setMethod(Method.LINEAR);
+//            later.setDelay(RetryLaterException.DEFAULT_DELAY);
+//            
+//            //是否可以单独rollback
+//            if (getActionNode().soloRollback && StringUtils.isNotBlank(getActionNode().rollback)) {
+//            	later.setRollBack(true); 
+//            }
+//            
+//            throw later;
+//        }
+//        return result;
+    	return classAction.handle(context);
     }
 
     /*
@@ -75,32 +79,33 @@ public class ClassActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-        if (StringUtils.isEmpty(getActionNode().rollback)) {
-            return null;
-        }
-        ProcessMessage result = null;
-        try {
-            Class<?> clz = Class.forName(getActionNode().rollback);
-            Object obj = clz.newInstance();
-            if (obj instanceof ActionExecutor) {
-            	ActionExecutor action = (ActionExecutor) obj;
-                if (StringUtils.isNotBlank(getActionNode().name)) {
-                    action.inject(getActionNode().name);
-                }
-                result = action.rollback(context);
-            }
-//            logger.info("[ClassActor rollback]调用成功: {}", result);
-        } catch (Exception e) {
-            String errMsg = String.format("[ClassActor rollback][%s]调用参数: %s, 返回信息:%s", getActionNode().rollback, context, result);
-            logger.error(errMsg, e);
-
-            RetryLaterException later = new RetryLaterException(errMsg);
-            later.setMethod(Method.LINEAR);
-            later.setDelay(RetryLaterException.DEFAULT_DELAY);
-            later.setRollBack(false);
-            throw later;
-        }
-        return result;
+//        if (StringUtils.isEmpty(getActionNode().rollback)) {
+//            return null;
+//        }
+//        ProcessMessage result = null;
+//        try {
+//            Class<?> clz = Class.forName(getActionNode().rollback);
+//            Object obj = clz.newInstance();
+//            if (obj instanceof ActionExecutor) {
+//            	ActionExecutor action = (ActionExecutor) obj;
+//                if (StringUtils.isNotBlank(getActionNode().name)) {
+//                    action.inject(getActionNode().name);
+//                }
+//                result = action.rollback(context);
+//            }
+////            logger.info("[ClassActor rollback]调用成功: {}", result);
+//        } catch (Exception e) {
+//            String errMsg = String.format("[ClassActor rollback][%s]调用参数: %s, 返回信息:%s", getActionNode().rollback, context, result);
+//            logger.error(errMsg, e);
+//
+//            RetryLaterException later = new RetryLaterException(errMsg);
+//            later.setMethod(Method.LINEAR);
+//            later.setDelay(RetryLaterException.DEFAULT_DELAY);
+//            later.setRollBack(false);
+//            throw later;
+//        }
+//        return result;
+    	return classAction.rollback(context);
     }
 
     /*
@@ -111,7 +116,8 @@ public class ClassActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage retry(ProcessMessage context) throws ActionExecutionException {
-        return this.handle(context);
+    	logger.debug("retry");
+        return classAction.retry(context);
     }
 
 }

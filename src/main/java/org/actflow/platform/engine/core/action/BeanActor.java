@@ -8,16 +8,15 @@
  */
 package org.actflow.platform.engine.core.action;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 
 import org.actflow.platform.engine.akkaspringfactory.Actor;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.exception.ActionExecutionException;
 import org.actflow.platform.engine.exception.RetryLaterException;
-import org.actflow.platform.engine.exception.RetryLaterException.Method;
-import org.actflow.platform.engine.utils.SpringContextUtils;
 
 /** 
  * @ClassName: BeanActor
@@ -29,6 +28,9 @@ import org.actflow.platform.engine.utils.SpringContextUtils;
 public class BeanActor extends AbstractActionActor {
     private final static Logger logger = LoggerFactory.getLogger(BeanActor.class);
     
+    @Inject
+    private BeanAction beanAction;
+    
     /*
      * (non-Javadoc)
      * <p>Title: handle</p> 
@@ -37,38 +39,39 @@ public class BeanActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-    	ProcessMessage result = null;
-        try {
-            Object bean = SpringContextUtils.getBeanById(getActionNode().handle);
-            if (bean == null) {
-                String errMsg = String.format("Can not find Spring bean [%s], please check your Spring configuration.", getActionNode().handle);
-                throw new ActionExecutionException(errMsg);
-            }
-            if (bean instanceof ActionExecutor) {
-            	ActionExecutor action = (ActionExecutor) bean;
-                if (StringUtils.isNotBlank(getActionNode().name)) {
-                    action.inject(getActionNode().name);
-                }
-                result = action.handle(context);
-            }
-//            logger.info("[BeanActor handle]调用成功: {}, {}", getActionNode().handle, result);
-        } catch (Exception e) {
-            String errMsg = String.format("[BeanActor handle][%s]调用异常，参数: %s, 返回信息:%s", getActionNode().handle, context, result);
-            logger.error(errMsg, e);
-            //throw new ActionExecutionException(e.getMessage());
-
-            RetryLaterException later = new RetryLaterException(errMsg);
-            later.setMethod(Method.LINEAR);
-            later.setDelay(RetryLaterException.DEFAULT_DELAY);
-            
-            //是否可以单独rollback
-            if (getActionNode().soloRollback && StringUtils.isNotBlank(getActionNode().rollback)) {
-            	later.setRollBack(true); 
-            }
-            
-            throw later;
-        }
-        return result;
+//    	ProcessMessage result = null;
+//        try {
+//            Object bean = SpringContextUtils.getBeanById(getActionNode().handle);
+//            if (bean == null) {
+//                String errMsg = String.format("Can not find Spring bean [%s], please check your Spring configuration.", getActionNode().handle);
+//                throw new ActionExecutionException(errMsg);
+//            }
+//            if (bean instanceof ActionExecutor) {
+//            	ActionExecutor action = (ActionExecutor) bean;
+//                if (StringUtils.isNotBlank(getActionNode().name)) {
+//                    action.inject(getActionNode().name);
+//                }
+//                result = action.handle(context);
+//            }
+////            logger.info("[BeanActor handle]调用成功: {}, {}", getActionNode().handle, result);
+//        } catch (Exception e) {
+//            String errMsg = String.format("[BeanActor handle][%s]调用异常，参数: %s, 返回信息:%s", getActionNode().handle, context, result);
+//            logger.error(errMsg, e);
+//            //throw new ActionExecutionException(e.getMessage());
+//
+//            RetryLaterException later = new RetryLaterException(errMsg);
+//            later.setMethod(Method.LINEAR);
+//            later.setDelay(RetryLaterException.DEFAULT_DELAY);
+//            
+//            //是否可以单独rollback
+//            if (getActionNode().soloRollback && StringUtils.isNotBlank(getActionNode().rollback)) {
+//            	later.setRollBack(true); 
+//            }
+//            
+//            throw later;
+//        }
+//        return result;
+    	return beanAction.handle(context);
     }
 
     /*
@@ -79,35 +82,36 @@ public class BeanActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-        if (StringUtils.isEmpty(getActionNode().rollback)) {
-            return null;
-        }
-        ProcessMessage result = null;
-        try {
-            Object bean = SpringContextUtils.getBeanById(getActionNode().rollback);
-            if (bean == null) {
-                String errMsg = String.format("Can not find Spring bean [%s], please check your Spring configuration.", getActionNode().rollback);
-                throw new ActionExecutionException(errMsg);
-            }
-            if (bean instanceof ActionExecutor) {
-            	ActionExecutor action = (ActionExecutor) bean;
-                if (StringUtils.isNotBlank(getActionNode().name)) {
-                    action.inject(getActionNode().name);
-                }
-                result = action.rollback(context);
-            }
-//            logger.info("[BeanActor rollback]调用成功: {}", result);
-        } catch (Exception e) {
-            String errMsg = String.format("[BeanActor rollback][%s]调用参数: %s, 返回信息:%s", getActionNode().rollback, context, result);
-            logger.error(errMsg, e);
-
-            RetryLaterException later = new RetryLaterException(errMsg);
-            later.setMethod(Method.EXPONENTIAL);
-            later.setDelay(RetryLaterException.DEFAULT_DELAY);
-            later.setRollBack(false);
-            throw later;
-        }
-        return result;
+//        if (StringUtils.isEmpty(getActionNode().rollback)) {
+//            return null;
+//        }
+//        ProcessMessage result = null;
+//        try {
+//            Object bean = SpringContextUtils.getBeanById(getActionNode().rollback);
+//            if (bean == null) {
+//                String errMsg = String.format("Can not find Spring bean [%s], please check your Spring configuration.", getActionNode().rollback);
+//                throw new ActionExecutionException(errMsg);
+//            }
+//            if (bean instanceof ActionExecutor) {
+//            	ActionExecutor action = (ActionExecutor) bean;
+//                if (StringUtils.isNotBlank(getActionNode().name)) {
+//                    action.inject(getActionNode().name);
+//                }
+//                result = action.rollback(context);
+//            }
+////            logger.info("[BeanActor rollback]调用成功: {}", result);
+//        } catch (Exception e) {
+//            String errMsg = String.format("[BeanActor rollback][%s]调用参数: %s, 返回信息:%s", getActionNode().rollback, context, result);
+//            logger.error(errMsg, e);
+//
+//            RetryLaterException later = new RetryLaterException(errMsg);
+//            later.setMethod(Method.EXPONENTIAL);
+//            later.setDelay(RetryLaterException.DEFAULT_DELAY);
+//            later.setRollBack(false);
+//            throw later;
+//        }
+//        return result;
+    	return beanAction.rollback(context);
     }
 
     /*
@@ -118,7 +122,8 @@ public class BeanActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage retry(ProcessMessage context) throws ActionExecutionException {
-        return this.handle(context);
+    	logger.debug("retry");
+        return beanAction.retry(context);
     }
     
 }
