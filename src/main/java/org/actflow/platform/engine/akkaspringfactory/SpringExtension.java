@@ -14,8 +14,7 @@ import org.springframework.context.ApplicationContext;
  * @author Davis Lau
  * 
  */
-public class SpringExtension extends
-		AbstractExtensionId<SpringExtension.SpringExt> {
+public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringExt> {
 
 	private SpringExtension() {
 	}
@@ -42,8 +41,9 @@ public class SpringExtension extends
 	}
 
 	/**
-	 * The lookup method is required by ExtensionIdProvider, so we return ourselves here,
-	 * this allows us to configure our extension to be loaded when the ActorSystem starts up
+	 * The lookup method is required by ExtensionIdProvider, so we return
+	 * ourselves here, this allows us to configure our extension to be loaded
+	 * when the ActorSystem starts up
 	 *
 	 * @return extension itself
 	 */
@@ -65,43 +65,46 @@ public class SpringExtension extends
 		 * Create a Props for the specified actorBeanName using the
 		 * SpringActorProducer class.
 		 *
-		 * @param actorBeanName The name of the actor bean to create Props for
+		 * @param actorBeanName
+		 *            The name of the actor bean to create Props for
 		 * @return a Props that will create the named actor bean using Spring
 		 */
 		public Props create(String actorBeanName) {
-			return Props.create(SpringActorProducer.class,
-					applicationContext, actorBeanName);
+			return Props.create(SpringActorProducer.class, applicationContext, actorBeanName);
 		}
 
 		/**
 		 * Create a Props for the specified actorBeanName using the
 		 * SpringActorProducer class.
 		 *
-		 * @param requiredType Type of the actor bean must match. Can be an interface or superclass
-		 *                     of the actual class, or {@code null} for any match. For example, if the value
-		 *                     is {@code Object.class}, this method will succeed whatever the class of the
-		 *                     returned instance.
+		 * @param requiredType
+		 *            Type of the actor bean must match. Can be an interface or
+		 *            superclass of the actual class, or {@code null} for any
+		 *            match. For example, if the value is {@code Object.class},
+		 *            this method will succeed whatever the class of the
+		 *            returned instance.
 		 * @return a Props that will create the actor bean using Spring
 		 */
-		public Props create(Class<? > requiredType) {
-			return Props.create(SpringActorProducer.class,
-					applicationContext, requiredType);
+		public Props create(Class<?> requiredType) {
+			return Props.create(SpringActorProducer.class, applicationContext, requiredType);
 		}
 
 		/**
 		 * Create a Props for the specified actorBeanName using the
 		 * SpringActorProducer class.
 		 *
-		 * @param actorBeanName The name of the actor bean to create Props for
-		 * @param requiredType  Type of the actor bean must match. Can be an interface or superclass
-		 *                      of the actual class, or {@code null} for any match. For example, if the value
-		 *                      is {@code Object.class}, this method will succeed whatever the class of the
-		 *                      returned instance.
+		 * @param actorBeanName
+		 *            The name of the actor bean to create Props for
+		 * @param requiredType
+		 *            Type of the actor bean must match. Can be an interface or
+		 *            superclass of the actual class, or {@code null} for any
+		 *            match. For example, if the value is {@code Object.class},
+		 *            this method will succeed whatever the class of the
+		 *            returned instance.
 		 * @return a Props that will create the actor bean using Spring
 		 */
 		public Props create(String actorBeanName, Class<? extends AbstractActor> requiredType) {
-			return Props.create(SpringActorProducer.class,
-					applicationContext, actorBeanName, requiredType);
+			return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, requiredType);
 		}
 	}
 }
