@@ -14,13 +14,13 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<scm>
 		<url>https://github.com/daviswlau/actflow</url>
 		<connection>https://github.com/daviswlau/actflow.git</connection>
 		<developerConnection>https://github.com/daviswlau/actflow</developerConnection>
 	</scm>
-	
+
 	<developers>
 		<developer>
 			<name>Davis Lau</name>
@@ -123,12 +123,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hyperic</groupId>
-			<artifactId>sigar</artifactId>
-			<version>1.6.5.132</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.1.41</version>
@@ -149,5 +143,21 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<!-- 这个id需要在setting.xml中设置 -->
+			<id>sonatype-nexus-snapshots</id>
+			<name>OSS Snapshots Repository</name>
+			<!-- 这里的url就是Issue中回复的snapshots 的repo地址 -->
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>OSS Staging Repository</name>
+			<!-- 这里的url就是Issue中回复的staging 的repo地址 -->
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 </project>
