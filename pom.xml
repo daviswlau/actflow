@@ -6,6 +6,7 @@
 	<version>1.0.0</version>
 	<name>Actor flow Engine</name>
 	<url>http://maven.apache.org</url>
+	<description>A light &amp; fastest work flow with Actor pattern.</description>
 
 	<licenses>
 		<license>
@@ -202,5 +203,5 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-
+	
 </project>
