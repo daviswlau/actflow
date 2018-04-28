@@ -7,6 +7,28 @@
 	<name>Actor flow Engine</name>
 	<url>http://maven.apache.org</url>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<scm>
+		<url>https://github.com/daviswlau/actflow</url>
+		<connection>https://github.com/daviswlau/actflow.git</connection>
+		<developerConnection>https://github.com/daviswlau/actflow</developerConnection>
+	</scm>
+	
+	<developers>
+		<developer>
+			<name>Davis Lau</name>
+			<email>leova@live.com</email>
+			<url>https://github.com/daviswlau</url>
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -59,11 +81,11 @@
 			<version>4.2.5.RELEASE</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-oxm</artifactId>
-		    <version>4.2.5.RELEASE</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>4.2.5.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
