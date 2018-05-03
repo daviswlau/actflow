@@ -9,11 +9,11 @@ JDK1.8
 to build
 mvn clean package install
 
-to use
+use from maven center repository
 <dependency>
-	<groupId>org.actflow</groupId>
-	<artifactId>actflow-engine</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+  <groupId>io.github.daviswlau</groupId>
+  <artifactId>actflow-engine</artifactId>
+  <version>1.0.0</version>
 </dependency>
 
 the cluster configuration, pls view 'resources/akkaActor-cluster.conf'
