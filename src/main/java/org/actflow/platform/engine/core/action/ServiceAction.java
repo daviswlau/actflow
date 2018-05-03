@@ -48,7 +48,12 @@ public class ServiceAction extends AbstractAction {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-        String resultString = null;
+    	ActionNode node = getActionNode();
+    	if (node == null || StringUtils.isEmpty(node.handle)) {
+    		return ProcessMessage.errorMessage();
+    	}
+    	
+    	String resultString = null;
         Map<String, String> params = transformMap(context.getData());
 //        Map params = JSONObject.parseObject(context.getData());
         try {
@@ -90,9 +95,11 @@ public class ServiceAction extends AbstractAction {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-        if (StringUtils.isEmpty(getActionNode().rollback)) {
-            return null;
-        }
+    	ActionNode node = getActionNode();
+    	if (node == null || StringUtils.isEmpty(node.rollback)) {
+    		return ProcessMessage.errorMessage();
+    	}
+    	
         String resultString = null;
         Map<String, String> params = transformMap(context.getData());
 //        Map params = JSONObject.parseObject(context.getData());

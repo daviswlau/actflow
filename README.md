@@ -17,6 +17,7 @@ use from maven center repository:
   <version>1.0.0</version>
 </dependency>
 
+
 the cluster configuration, pls view 'resources/akkaActor-cluster.conf'
 
 the flow sample, pls view 'engines/flow-sample.xml'

@@ -18,6 +18,7 @@ import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.exception.ActionExecutionException;
 import org.actflow.platform.engine.exception.RetryLaterException;
 import org.actflow.platform.engine.exception.RetryLaterException.Method;
+import org.actflow.platform.engine.xstream.definition.ActionNode;
 
 /** 
  * @ClassName: ClassAction
@@ -38,6 +39,11 @@ public class ClassAction extends AbstractAction {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
+    	ActionNode node = getActionNode();
+    	if (node == null || StringUtils.isEmpty(node.handle)) {
+    		return ProcessMessage.errorMessage();
+    	}
+    	
     	ProcessMessage result = null;
         try {
             Class<?> clz = Class.forName(getActionNode().handle);
@@ -77,10 +83,12 @@ public class ClassAction extends AbstractAction {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-        if (StringUtils.isEmpty(getActionNode().rollback)) {
-            return null;
-        }
-        ProcessMessage result = null;
+        ActionNode node = getActionNode();
+    	if (node == null || StringUtils.isEmpty(node.rollback)) {
+    		return ProcessMessage.errorMessage();
+    	}
+    	
+    	ProcessMessage result = null;
         try {
             Class<?> clz = Class.forName(getActionNode().rollback);
             Object obj = clz.newInstance();
