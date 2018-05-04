@@ -11,10 +11,6 @@
 											org.actflow.platform.engine.core.action,
 											org.actflow.platform.engine.core.process" />
 
-	<util:map id="engineUrlMap" map-class="java.util.HashMap">
-		<entry key="skuApiUrl" value="${skuApiUrl}" />
-	</util:map>
-
 	<bean id="actorSystem"
 		class="org.actflow.platform.engine.akkaspringfactory.ActorSystemFactoryBean">
 		<property name="name" value="engineActorSystem" />
