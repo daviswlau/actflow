@@ -39,6 +39,7 @@ public class BeanActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
+    	beanAction.setActionNode(this.getActionNode());
     	return beanAction.handle(context);
     }
 
@@ -50,6 +51,7 @@ public class BeanActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
+    	beanAction.setActionNode(this.getActionNode());
     	return beanAction.rollback(context);
     }
 

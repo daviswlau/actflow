@@ -10,6 +10,12 @@
 		base-package="org.actflow.platform.engine.akkaspringfactory,
 											org.actflow.platform.engine.core.action,
 											org.actflow.platform.engine.core.process" />
+											
+	<!-- service action url sample 
+	<util:map id="engineUrlMap" map-class="java.util.HashMap">
+	    <entry key="serviceCallUrl" value="${serviceCallUrl}"/>
+	</util:map>
+	 -->
 
 	<bean id="actorSystem"
 		class="org.actflow.platform.engine.akkaspringfactory.ActorSystemFactoryBean">
@@ -23,28 +29,32 @@
 	</bean>
 
 	<bean id="processActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean">
+		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
 		<property name="actorClass"
 			value="org.actflow.platform.engine.core.process.Process" />
 	</bean>
 
 	<bean id="classActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean">
+		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
 		<property name="actorClass"
 			value="org.actflow.platform.engine.core.action.ClassActor" />
 	</bean>
 
 	<bean id="beanActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean">
+		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
 		<property name="actorClass"
 			value="org.actflow.platform.engine.core.action.BeanActor" />
 	</bean>
 
 	<bean id="serviceActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean">
+		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
 		<property name="actorClass"
 			value="org.actflow.platform.engine.core.action.ServiceActor" />

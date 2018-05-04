@@ -40,6 +40,7 @@ public class ServiceActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
+    	serviceAction.setActionNode(this.getActionNode());
     	return serviceAction.handle(context);
     }
 
@@ -51,6 +52,7 @@ public class ServiceActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
+    	serviceAction.setActionNode(this.getActionNode());
     	return serviceAction.rollback(context);
     }
 
