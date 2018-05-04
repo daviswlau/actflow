@@ -97,22 +97,11 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 	public void setProcessNode(ProcessNode processNode) {
 		this.processNode = processNode;
 	}
-	
-//	private static DefaultProcessExecutor processExecutor = null;
-//	
-//	public static DefaultProcessExecutor getInstance() {
-//		if (processExecutor == null) {
-//			processExecutor = new DefaultProcessExecutor();
-//			processExecutor.engineDefinitionLoaderService = (EngineDefinitionLoaderService) SpringContextUtils.getBeanById(EngineConstants.SPRING_ENGINE_LOADER_CONFIG);
-//			processExecutor.processActor = (ActorRef) SpringContextUtils.getBeanById(EngineConstants.SPRING_ACTOR_PROCESS_CONFIG);
-//		    processExecutor.classActor = (ActorRef) SpringContextUtils.getBeanById(EngineConstants.SPRING_ACTOR_CLASS_CONFIG);
-//		    processExecutor.beanActor = (ActorRef) SpringContextUtils.getBeanById(EngineConstants.SPRING_ACTOR_BEAN_CONFIG);
-//		    processExecutor.serviceActor = (ActorRef) SpringContextUtils.getBeanById(EngineConstants.SPRING_ACTOR_SERVICE_CONFIG);
-//		}
-//		
-//		return processExecutor;
-//	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.actflow.platform.engine.core.process.ProcessExecutorService#asyHandle(org.actflow.platform.engine.dto.ProcessMessage)
+	 */
 	@Override
 	public void asyHandle(ProcessMessage message) throws EngineException {
 		message.setEvent(ProcessEventEnum.HANDLE.getValue());
@@ -135,6 +124,10 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.actflow.platform.engine.core.process.ProcessExecutorService#asyRollback(org.actflow.platform.engine.dto.ProcessMessage)
+	 */
 	@Override
 	public void asyRollback(ProcessMessage message) throws EngineException {
 		message.setEvent(ProcessEventEnum.ROLLBACK.getValue());
@@ -182,6 +175,10 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.actflow.platform.engine.core.process.ProcessExecutorService#syHandle(org.actflow.platform.engine.dto.ProcessMessage)
+	 */
 	@Override
 	public ProcessMessage syHandle(ProcessMessage message) throws EngineException {
 		message.setEvent(ProcessEventEnum.HANDLE.getValue());
@@ -212,6 +209,10 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 		return message;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.actflow.platform.engine.core.process.ProcessExecutorService#syRollback(org.actflow.platform.engine.dto.ProcessMessage)
+	 */
 	@Override
 	public ProcessMessage syRollback(ProcessMessage message) throws EngineException {
 		message.setEvent(ProcessEventEnum.ROLLBACK.getValue());
