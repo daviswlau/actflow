@@ -1,15 +1,13 @@
 ActorFlowEngine
 =========
 
-A light & fastest work flow with Actor pattern.
+## A light & fastest work flow with Actor pattern.
 
-environment: JDK1.8 above
+## environment: JDK1.8 above
 
-to build:
+## to build: mvn clean package install
 
-mvn clean package install
-
-use from maven center repository:
+##use from maven center repository:
 
 <dependency>
   <groupId>io.github.daviswlau</groupId>
