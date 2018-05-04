@@ -68,7 +68,7 @@ public class EngineUtils {
         }
         
         long costtime = new Date().getTime() - startTime.getTime();
-        logger.info(String.format("Deep Merge Trade JSON, cost time (ms) : %d", costtime));
+        logger.debug(String.format("Deep Merge Trade JSON, cost time (ms) : %d", costtime));
         
         return target;
     }

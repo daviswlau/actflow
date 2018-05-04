@@ -200,7 +200,7 @@ public class HttpCaller {
                 builder.addParameter(pair.getName(), value);
             }
             URI uri = builder.build();
-            logger.info("build request uri: " + uri.toString());
+            logger.debug("build request uri: " + uri.toString());
             return new HttpGet(uri);
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("request uri syntax error.", e);
@@ -226,7 +226,7 @@ public class HttpCaller {
                 sb.append(sep).append(pair.toString());
                 sep = " | ";
             }
-            logger.info(String.format("build request uri: %s; post params: [%s]", uri.toString(), sb.toString()));
+            logger.debug(String.format("build request uri: %s; post params: [%s]", uri.toString(), sb.toString()));
             httpPost = new HttpPost(uri);
             httpPost.setEntity(entity);
             return httpPost;

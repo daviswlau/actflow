@@ -41,7 +41,7 @@ public class XmlEngineLoaderService extends AbstractEngineLoaderService {
     
     
     public void init() throws IOException {
-    	logger.info("engine definitions loading...");
+    	logger.debug("engine definitions loading...");
         setTradeEngineDefinitions(new HashMap<String, EngineDefinition>());
         Resource[] resources = null;
         PathMatchingResourcePatternResolver  resolver = new PathMatchingResourcePatternResolver();
@@ -57,7 +57,7 @@ public class XmlEngineLoaderService extends AbstractEngineLoaderService {
                 }
             }
         }
-        logger.info("engine definitions load end.");
+        logger.debug("engine definitions load end.");
     }
 
     /**

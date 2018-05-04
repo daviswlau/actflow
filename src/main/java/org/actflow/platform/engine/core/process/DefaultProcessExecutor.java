@@ -330,7 +330,7 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 		public void onSuccess(Object result) throws Throwable {
 			this.message = (ProcessMessage) result;
 			latch.countDown();
-//			logger.info("Process[{}] Action[{}] get result: [{}]", this.message.getId(), this.message.getActionId(), JSON.toJSONString(this.message));
+//			logger.debug("Process[{}] Action[{}] get result: [{}]", this.message.getId(), this.message.getActionId(), JSON.toJSONString(this.message));
 		}
 
 		/**

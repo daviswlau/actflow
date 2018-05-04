@@ -66,7 +66,7 @@ public class ServiceAction extends AbstractAction {
                     resultString = HttpClientUtil.doGet(this.getActionUrl().getUrl(), params);
                 }
             }
-//            logger.info("[ServiceAction handle][{}]调用成功，返回结果:{}", this.getActionUrl().getUrl(), resultString);
+//            logger.debug("[ServiceAction handle][{}]调用成功，返回结果:{}", this.getActionUrl().getUrl(), resultString);
         } catch (Exception e) {
             String errMsg = String.format("[ServiceAction handle][%s]调用, 调用参数: %s, 返回信息:%s", this.getActionUrl().getUrl(), params, resultString);
             logger.error(errMsg, e);
@@ -113,7 +113,7 @@ public class ServiceAction extends AbstractAction {
                     resultString = HttpClientUtil.doGet(this.getActionUrl().getUrl(), params);
                 }
             }
-//            logger.info("[ServiceAction rollback]调用成功: {}", resultString);
+//            logger.debug("[ServiceAction rollback]调用成功: {}", resultString);
         } catch (Exception e) {
             String errMsg = String.format("[ServiceAction rollback][%s]调用, 调用参数: %s, 返回信息:%s", this.getActionUrl().getUrl(), params, resultString);
             logger.error(errMsg, e);

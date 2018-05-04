@@ -77,7 +77,7 @@ public class HttpClientUtil {
                 sbf.append(result);
             }
             long costtime = endTime.getTime() - startTime.getTime();
-            logger.info(String.format("调用服务 : %s; response text: %s\t costtime(ms) : %d", path, sbf.toString(),
+            logger.debug(String.format("调用服务 : %s; response text: %s\t costtime(ms) : %d", path, sbf.toString(),
                     costtime));
             return result;
         }
@@ -145,7 +145,7 @@ public class HttpClientUtil {
                 sbf.append(result);
             }
             long costtime = endTime.getTime() - startTime.getTime();
-            logger.info(String.format("调用服务 : %s; response text: %s\t costtime(ms) : %d", path, sbf.toString(),
+            logger.debug(String.format("调用服务 : %s; response text: %s\t costtime(ms) : %d", path, sbf.toString(),
                     costtime));
             return result;
         }

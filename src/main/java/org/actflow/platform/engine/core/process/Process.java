@@ -58,9 +58,10 @@ public class Process extends UntypedActor {
 		    		nextAction = engineDefinitionLoaderService.getNextRollbackDefinition(message.getTradeCode(), message.getId(), message.getActionId());
 		    	}
 		    	
-		    	logger.info("next action : [{}]", JSON.toJSON(nextAction));
 		    	if (message != null && StringUtils.equals(message.getType(), ProcessTypeEnum.SEQUENCE.getValue())) {
 		    		if (nextAction != null && StringUtils.equals(message.getStatus(), String.valueOf(MessageStatus.SUCCESS.getStatus()))) {
+		    			logger.debug("next action : [{}]", JSON.toJSON(nextAction));
+		    			
 		    			message.setActionId(nextAction.id);
 		    			if (StringUtils.equals(nextAction.type, ActionTypeEnum.CLASS.getValue())) {
 		    				classActor.tell(message, getSelf());

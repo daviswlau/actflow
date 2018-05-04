@@ -63,19 +63,19 @@ public class ActorSystemFactoryBean implements FactoryBean<ActorSystem>, Applica
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		logger.info("set akka system properties...");
+		logger.debug("set akka system properties...");
 		ActorSystem system;
 		if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(configName) && config != null) {
-			logger.info("setting mode 1");
+			logger.debug("setting mode 1");
 			system = ActorSystem.create(name, ConfigFactory.load(configName).withFallback(config));
 		} else if (StringUtils.isNotBlank(name) && config != null) {
-			logger.info("setting mode 2");
+			logger.debug("setting mode 2");
 			system = ActorSystem.create(name, config);
 		} else if (StringUtils.isNotBlank(name)) {
-			logger.info("setting mode 3");
+			logger.debug("setting mode 3");
 			system = ActorSystem.create(name);
 		} else {
-			logger.info("setting mode 4");
+			logger.debug("setting mode 4");
 			system = ActorSystem.create();
 		}
 		// init extensions

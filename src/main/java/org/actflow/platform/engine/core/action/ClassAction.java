@@ -55,7 +55,7 @@ public class ClassAction extends AbstractAction {
                 }
                 result = action.handle(context);
             }
-//            logger.info("[ClassAction handle]调用成功: {}, {}", getActionNode().handle, result);
+//            logger.debug("[ClassAction handle]调用成功: {}, {}", getActionNode().handle, result);
         } catch (Exception e) {
             String errMsg = String.format("[ClassAction handle][%s]调用异常，参数: %s, 返回信息:%s", getActionNode().handle, context, result);
             logger.error(errMsg, e);
@@ -99,7 +99,7 @@ public class ClassAction extends AbstractAction {
                 }
                 result = action.rollback(context);
             }
-//            logger.info("[ClassAction rollback]调用成功: {}", result);
+//            logger.debug("[ClassAction rollback]调用成功: {}", result);
         } catch (Exception e) {
             String errMsg = String.format("[ClassAction rollback][%s]调用参数: %s, 返回信息:%s", getActionNode().rollback, context, result);
             logger.error(errMsg, e);
