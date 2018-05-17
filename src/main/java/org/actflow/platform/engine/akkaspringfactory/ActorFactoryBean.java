@@ -69,7 +69,7 @@ public class ActorFactoryBean implements FactoryBean<ActorRef>, ApplicationConte
 			props = props.withDispatcher(dispatcher);
 		}
 
-		return actorSystem.actorOf(props);
+		return actorSystem.actorOf(props, "actflow");
 	}
 
 	@Override
