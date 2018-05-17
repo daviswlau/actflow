@@ -1,9 +1,3 @@
-/*
- * Copyright 2012-2014 Wanda.cn All right reserved. This software is the confidential and
- * proprietary information of Wanda.cn ("Confidential Information"). You shall not disclose such
- * Confidential Information and shall use it only in accordance with the terms of the license
- * agreement you entered into with Wanda.cn.
- */
 package org.actflow.platform.http.bean;
 
 import com.alibaba.fastjson.JSONObject;

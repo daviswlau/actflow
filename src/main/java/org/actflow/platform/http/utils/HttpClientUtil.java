@@ -56,7 +56,7 @@ public class HttpClientUtil {
         Response response;
         if (useProxy) {
             ProxyInfo proxyInfo = new ProxyInfo();
-            proxyInfo.setHost("proxy1.wanda.cn");
+            proxyInfo.setHost("proxy1.proxydomain.com");
             proxyInfo.setPort(8080);
             proxyInfo.setUserName("");
             proxyInfo.setPwd("");
@@ -124,7 +124,7 @@ public class HttpClientUtil {
         Response response;
         if (useProxy) {
             ProxyInfo proxyInfo = new ProxyInfo();
-            proxyInfo.setHost("proxy1.wanda.cn");
+            proxyInfo.setHost("proxy1.proxydomain.com");
             proxyInfo.setPort(8080);
             proxyInfo.setUserName("");
             proxyInfo.setPwd("");
