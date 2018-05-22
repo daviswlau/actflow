@@ -5,9 +5,9 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Deploy;
 import akka.actor.Props;
-import akka.actor.AbstractActor;
 import akka.japi.Creator;
 import akka.routing.RouterConfig;
+
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
@@ -27,33 +27,28 @@ public class ActorFactoryBean implements FactoryBean<ActorRef>, ApplicationConte
 	private ActorSystem actorSystem;
 	private String actorClass;
 	private Object[] args = {};
-	private String actorBeanClass;
 	private String actorBeanName;
 	private RouterConfig routerConfig;
 	private Deploy deploy;
 	private String mailbox;
 	private String dispatcher;
+	private boolean withRouter = false;
 
 	@Override
 	public ActorRef getObject() throws Exception {
 		return doCreateObject();
 	}
 
-	@SuppressWarnings("unchecked")
 	private ActorRef doCreateObject() throws Exception {
-		Props props;
+		Props props = null;
 		if (actorClass != null) {
 			props = Props.create(new SpringCreator(ctx, Class.forName(actorClass), args));
-		} else if (actorBeanName != null && actorBeanClass != null) {
-			props = SpringProps.create(actorSystem, actorBeanName, (Class<? extends AbstractActor>) Class.forName(actorBeanClass));
-		} else if (actorBeanClass != null) {
-			props = SpringProps.create(actorSystem, (Class<? extends AbstractActor>) Class.forName(actorBeanClass));
-		} else {
-			props = SpringProps.create(actorSystem, actorBeanName);
+		} else if (actorBeanName != null) {
+			props = SpringProps.create(withRouter, actorSystem, actorBeanName);
 		}
 
 		if (props == null) {
-			throw new BeanCreationException("Can not create ActorRef for given parameters, actorClass=" + actorClass + ", actorBeanClass=" + actorBeanClass + ", actorBeanName=" + actorBeanName);
+			throw new BeanCreationException("Can not create ActorRef for given parameters, actorClass=" + actorClass + ", actorBeanName=" + actorBeanName);
 		}
 
 		if (routerConfig != null) {
@@ -68,8 +63,12 @@ public class ActorFactoryBean implements FactoryBean<ActorRef>, ApplicationConte
 		if (dispatcher != null) {
 			props = props.withDispatcher(dispatcher);
 		}
+		
+//		getContext()
+//		
+//		actorSystem.get
 
-		return actorSystem.actorOf(props, "actflow");
+		return actorSystem.actorOf(props, actorBeanName);
 	}
 
 	@Override
@@ -89,10 +88,6 @@ public class ActorFactoryBean implements FactoryBean<ActorRef>, ApplicationConte
 
 	public void setActorSystem(ActorSystem actorSystem) {
 		this.actorSystem = actorSystem;
-	}
-
-	public void setActorBeanClass(String actorBeanClass) {
-		this.actorBeanClass = actorBeanClass;
 	}
 
 	public void setActorBeanName(String actorBeanName) {
@@ -121,6 +116,10 @@ public class ActorFactoryBean implements FactoryBean<ActorRef>, ApplicationConte
 
 	public void setArgs(Object[] args) {
 		this.args = args;
+	}
+
+	public void setWithRouter(boolean withRouter) {
+		this.withRouter = withRouter;
 	}
 
 	private static class SpringCreator implements Creator<Actor> {

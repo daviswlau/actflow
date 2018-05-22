@@ -8,55 +8,65 @@
 
 	<context:component-scan
 		base-package="org.actflow.platform.engine.akkaspringfactory,
-											org.actflow.platform.engine.core.action,
-											org.actflow.platform.engine.core.process" />
-											
-	<!-- service action url sample 
-	<util:map id="engineUrlMap" map-class="java.util.HashMap">
-	    <entry key="serviceCallUrl" value="${serviceCallUrl}"/>
-	</util:map>
-	 -->
+						org.actflow.platform.engine.actor,
+						org.actflow.platform.engine.core.action,
+						org.actflow.platform.engine.core.process.impl" />
+
+	<!-- service action url sample <util:map id="engineUrlMap" map-class="java.util.HashMap"> 
+		<entry key="serviceCallUrl" value="${serviceCallUrl}"/> </util:map> -->
 
 	<bean id="actorSystem"
 		class="org.actflow.platform.engine.akkaspringfactory.ActorSystemFactoryBean">
 		<property name="name" value="engineActorSystem" />
-		<property name="configName" value="${akkaActor_conf}" />
-		<property name="config">
+		<property name="configName" value="engine.conf" />
+		<property name="fallbackConfig">
 			<bean class="com.typesafe.config.ConfigFactory" factory-method="load">
-				<constructor-arg value="akkaActor.conf" />
+				<constructor-arg value="classpath*:fallbackConfig.conf" />
 			</bean>
 		</property>
 	</bean>
-
-	<bean id="processActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+	
+	<bean id="actorBootUp" class="org.actflow.platform.engine.akkaspringfactory.ActorBootUp" init-method="init" destroy-method="shutdown">
+		<property name="routerNum" value="64" />
+		<property name="actorSystem" ref="actorSystem" />
+		<property name="configName" value="engine.conf" />
+	</bean>
+<!-- 
+	<bean id="processActor" class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
 		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
-		<property name="actorClass"
+		<property name="actorBeanName" value="processActor" />
+		<property name="actorBeanClass"
 			value="org.actflow.platform.engine.core.process.Process" />
+		<property name="withRouter" value="true" />
 	</bean>
 
-	<bean id="classActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+	<bean id="classActor" class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
 		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
-		<property name="actorClass"
+		<property name="actorBeanName" value="classActor" />
+		<property name="actorBeanClass"
 			value="org.actflow.platform.engine.core.action.ClassActor" />
+		<property name="withRouter" value="true" />	
 	</bean>
 
-	<bean id="beanActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+	<bean id="beanActor" class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
 		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
-		<property name="actorClass"
+		<property name="actorBeanName" value="beanActor" />
+		<property name="actorBeanClass"
 			value="org.actflow.platform.engine.core.action.BeanActor" />
+		<property name="withRouter" value="true" />	
 	</bean>
 
-	<bean id="serviceActor"
-		class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
+	<bean id="serviceActor" class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"
 		scope="prototype">
 		<property name="actorSystem" ref="actorSystem" />
-		<property name="actorClass"
+		<property name="actorBeanName" value="serviceActor" />
+		<property name="actorBeanClass"
 			value="org.actflow.platform.engine.core.action.ServiceActor" />
+		<property name="withRouter" value="true" />	
 	</bean>
+	
+ -->	
 </beans>

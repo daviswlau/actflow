@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.daviswlau</groupId>
 	<artifactId>actflow-engine</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>Actor flow Engine</name>
 	<url>http://maven.apache.org</url>
 	<description>A light &amp; fastest work flow with Actor pattern.</description>

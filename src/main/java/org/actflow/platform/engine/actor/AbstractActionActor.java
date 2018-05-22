@@ -1,12 +1,10 @@
-package org.actflow.platform.engine.core.action;
-
-import javax.inject.Inject;
+package org.actflow.platform.engine.actor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.actflow.platform.engine.akkaspringfactory.Actor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.actflow.platform.engine.core.action.Action;
 import org.actflow.platform.engine.core.service.EngineDefinitionLoaderService;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.enums.ProcessEventEnum;
@@ -14,6 +12,7 @@ import org.actflow.platform.engine.exception.EngineExceptionHandleUtils;
 import org.actflow.platform.engine.xstream.definition.ActionNode;
 import org.actflow.platform.engine.xstream.definition.ProcessNode;
 
+import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 
 /**
@@ -23,13 +22,12 @@ import akka.actor.UntypedActor;
  * @date 2016年8月19日 下午7:29:36
  * @param <T>
  */
-@Actor
 public abstract class AbstractActionActor extends UntypedActor implements Action<ProcessMessage> {
 	private final static Logger logger = LoggerFactory.getLogger(AbstractActionActor.class);
     
 	ActionNode actionNode;
 	
-    @Inject
+	@Autowired
     private EngineDefinitionLoaderService engineDefinitionLoaderService;
 
 	/**
@@ -71,8 +69,8 @@ public abstract class AbstractActionActor extends UntypedActor implements Action
 		    			message = this.rollback(message);
 		    		}
 				}
-		    	
-		    	getSender().tell(message, getSelf());
+		    	ActorRef sender = getContext().parent();
+		    	getSender().tell(message, sender);
 		    	
 			} catch (Exception e) {
 				logger.error(e.getMessage());

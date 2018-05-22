@@ -1,6 +1,5 @@
 package org.actflow.platform.engine.akkaspringfactory;
 
-import akka.actor.AbstractActor;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 
@@ -9,15 +8,11 @@ import akka.actor.Props;
  */
 public class SpringProps {
 
-	public static Props create(ActorSystem actorSystem, String actorBeanName) {
-		return SpringExtension.instance().get(actorSystem).create(actorBeanName);
+	public static Props create(boolean withRouter, ActorSystem actorSystem, String actorBeanName) {
+		return SpringExtension.instance().get(actorSystem).create(withRouter, actorBeanName);
 	}
-
-	public static Props create(ActorSystem actorSystem, Class<? extends AbstractActor> requiredType) {
-		return SpringExtension.instance().get(actorSystem).create(requiredType);
-	}
-
-	public static Props create(ActorSystem actorSystem, String actorBeanName, Class<? extends AbstractActor> requiredType) {
-		return SpringExtension.instance().get(actorSystem).create(actorBeanName, requiredType);
+	
+	public static Props create(boolean withRouter, ActorSystem actorSystem, String actorBeanName, Object... args) {
+		return SpringExtension.instance().get(actorSystem).create(withRouter, actorBeanName, args);
 	}
 }

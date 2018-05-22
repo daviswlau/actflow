@@ -1,36 +1,38 @@
 /**   
- * @Title: ServiceActor.java
+ * @Title: ClassActor.java
  * @Package org.actflow.platform.engine.core.action.definition
  * @Description: TODO
  * @author Davis Lau
- * @date 2016年8月23日 上午9:52:24
+ * @date 2016年8月23日 上午9:52:05
  * @version V1.0
  */
-package org.actflow.platform.engine.core.action;
-
-
-import javax.inject.Inject;
+package org.actflow.platform.engine.actor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import org.actflow.platform.engine.akkaspringfactory.Actor;
+import org.actflow.platform.engine.core.action.ClassAction;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.exception.ActionExecutionException;
 import org.actflow.platform.engine.exception.RetryLaterException;
 
 /** 
- * @ClassName: ServiceActor
- * @Description: 流程动作调用rest服务
+ * @ClassName: ClassActor
+ * @Description: 流程动作调用外部class
  * @author Davis Lau
- * @date 2016年8月23日 上午9:52:24
+ * @date 2016年8月23日 上午9:52:05
  */
-@Actor
-public class ServiceActor extends AbstractActionActor {
-    private final static Logger logger = LoggerFactory.getLogger(ServiceActor.class);
+//@Actor
+@Component("classActor")
+@Scope("prototype")
+public class ClassActor extends AbstractActionActor {
+    private final static Logger logger = LoggerFactory.getLogger(ClassActor.class);
     
-    @Inject
-    private ServiceAction serviceAction;
+    @Autowired
+    private ClassAction classAction;
 
     /*
      * (non-Javadoc)
@@ -40,11 +42,11 @@ public class ServiceActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage handle(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-    	serviceAction.setActionNode(this.getActionNode());
-    	return serviceAction.handle(context);
+    	classAction.setActionNode(this.getActionNode());
+    	return classAction.handle(context);
     }
 
-	/*
+    /*
      * (non-Javadoc)
      * <p>Title: rollback</p> 
      * <p>Description: </p>
@@ -52,11 +54,11 @@ public class ServiceActor extends AbstractActionActor {
      */
     @Override
     public ProcessMessage rollback(ProcessMessage context) throws RetryLaterException, ActionExecutionException {
-    	serviceAction.setActionNode(this.getActionNode());
-    	return serviceAction.rollback(context);
+    	classAction.setActionNode(this.getActionNode());
+    	return classAction.rollback(context);
     }
 
-	/*
+    /*
      * (non-Javadoc)
      * <p>Title: retry</p> 
      * <p>Description: </p>
@@ -65,7 +67,7 @@ public class ServiceActor extends AbstractActionActor {
     @Override
     public ProcessMessage retry(ProcessMessage context) throws ActionExecutionException {
     	logger.debug("retry");
-        return serviceAction.retry(context);
+        return classAction.retry(context);
     }
-    
+
 }

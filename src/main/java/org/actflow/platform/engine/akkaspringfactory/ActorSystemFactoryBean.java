@@ -20,14 +20,19 @@ import org.springframework.context.ApplicationContextAware;
  * @author Davis Lau
  */
 public class ActorSystemFactoryBean implements FactoryBean<ActorSystem>, ApplicationContextAware, InitializingBean {
-	
+
 	private final static Logger logger = LoggerFactory.getLogger(ActorSystemFactoryBean.class);
 
 	private ApplicationContext ctx;
+	
 	private String name;
+	
 	private String configName;
-	private Config config;
+	
+	private Config fallbackConfig;
+	
 	private ActorSystem actorSystem;
+	
 
 	@Override
 	public ActorSystem getObject() throws Exception {
@@ -47,13 +52,13 @@ public class ActorSystemFactoryBean implements FactoryBean<ActorSystem>, Applica
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public void setConfigName(String configName) {
 		this.configName = configName;
 	}
 
-	public void setConfig(Config config) {
-		this.config = config;
+	public void setFallbackConfig(Config fallbackConfig) {
+		this.fallbackConfig = fallbackConfig;
 	}
 
 	@Override
@@ -64,22 +69,19 @@ public class ActorSystemFactoryBean implements FactoryBean<ActorSystem>, Applica
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		logger.debug("set akka system properties...");
-		ActorSystem system;
-		if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(configName) && config != null) {
+		ActorSystem system = null;
+		if (StringUtils.isNotBlank(name) && configName != null && fallbackConfig != null) {
 			logger.debug("setting mode 1");
-			system = ActorSystem.create(name, ConfigFactory.load(configName).withFallback(config));
-		} else if (StringUtils.isNotBlank(name) && config != null) {
-			logger.debug("setting mode 2");
-			system = ActorSystem.create(name, config);
+			system = ActorSystem.create(name, ConfigFactory.load(configName).withFallback(fallbackConfig));
 		} else if (StringUtils.isNotBlank(name)) {
-			logger.debug("setting mode 3");
+			logger.debug("setting mode 2");
 			system = ActorSystem.create(name);
 		} else {
-			logger.debug("setting mode 4");
+			logger.debug("setting mode 3");
 			system = ActorSystem.create();
 		}
 		// init extensions
 		SpringExtension.instance().get(system).setApplicationContext(ctx);
-		actorSystem = system;
+		actorSystem = system;	
 	}
 }

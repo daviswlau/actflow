@@ -6,14 +6,15 @@
  * @date 2016年8月23日 上午9:52:38
  * @version V1.0
  */
-package org.actflow.platform.engine.core.action;
+package org.actflow.platform.engine.actor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-
-import org.actflow.platform.engine.akkaspringfactory.Actor;
+import org.actflow.platform.engine.core.action.BeanAction;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.exception.ActionExecutionException;
 import org.actflow.platform.engine.exception.RetryLaterException;
@@ -24,11 +25,13 @@ import org.actflow.platform.engine.exception.RetryLaterException;
  * @author Davis Lau
  * @date 2016年8月23日 上午9:52:38
  */
-@Actor
+//@Actor
+@Component("beanActor")
+@Scope("prototype")
 public class BeanActor extends AbstractActionActor {
     private final static Logger logger = LoggerFactory.getLogger(BeanActor.class);
     
-    @Inject
+    @Autowired
     private BeanAction beanAction;
     
     /*

@@ -4,9 +4,10 @@ import akka.actor.AbstractExtensionId;
 import akka.actor.ExtendedActorSystem;
 import akka.actor.Extension;
 import akka.actor.Props;
-import akka.actor.AbstractActor;
+import akka.routing.FromConfig;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
  * An Akka Extension to provide access to Spring managed Actor Beans.
@@ -14,8 +15,9 @@ import org.springframework.context.ApplicationContext;
  * @author Davis Lau
  * 
  */
+@Component("springExtension")
 public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringExt> {
-
+	
 	private SpringExtension() {
 	}
 
@@ -55,6 +57,7 @@ public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringE
 	 * The Extension implementation.
 	 */
 	public static class SpringExt implements Extension {
+		
 		private volatile ApplicationContext applicationContext;
 
 		public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -72,39 +75,36 @@ public class SpringExtension extends AbstractExtensionId<SpringExtension.SpringE
 		public Props create(String actorBeanName) {
 			return Props.create(SpringActorProducer.class, applicationContext, actorBeanName);
 		}
-
+		
 		/**
-		 * Create a Props for the specified actorBeanName using the
-		 * SpringActorProducer class.
-		 *
-		 * @param requiredType
-		 *            Type of the actor bean must match. Can be an interface or
-		 *            superclass of the actual class, or {@code null} for any
-		 *            match. For example, if the value is {@code Object.class},
-		 *            this method will succeed whatever the class of the
-		 *            returned instance.
-		 * @return a Props that will create the actor bean using Spring
-		 */
-		public Props create(Class<?> requiredType) {
-			return Props.create(SpringActorProducer.class, applicationContext, requiredType);
-		}
-
-		/**
-		 * Create a Props for the specified actorBeanName using the
-		 * SpringActorProducer class.
-		 *
+		 * 
 		 * @param actorBeanName
-		 *            The name of the actor bean to create Props for
-		 * @param requiredType
-		 *            Type of the actor bean must match. Can be an interface or
-		 *            superclass of the actual class, or {@code null} for any
-		 *            match. For example, if the value is {@code Object.class},
-		 *            this method will succeed whatever the class of the
-		 *            returned instance.
+		 * 				The name of the actor bean to create Props for
+		 * @param args
 		 * @return a Props that will create the actor bean using Spring
 		 */
-		public Props create(String actorBeanName, Class<? extends AbstractActor> requiredType) {
-			return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, requiredType);
+		public Props create(String actorBeanName, Object... args) {
+			return Props.create(SpringActorProducer.class, applicationContext, actorBeanName, args);
 		}
+		
+		/**
+		 * support router
+		 */
+		public Props create(boolean withRouter, String actorBeanName) {
+			if (withRouter) {
+				return FromConfig.getInstance().props(create(actorBeanName));
+			}
+			return create(actorBeanName);
+		}
+		
+		/**
+		 * support router
+		 */
+		public Props create(boolean withRouter, String actorBeanName, Object... args) {
+			if (withRouter) {
+				return FromConfig.getInstance().props(create(actorBeanName, args));
+			}
+			return create(actorBeanName, args);
+		} 
 	}
 }

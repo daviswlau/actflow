@@ -1,6 +1,5 @@
 package org.actflow.platform.engine.core.action;
 
-import org.actflow.platform.engine.akkaspringfactory.Actor;
 import org.actflow.platform.engine.dto.ProcessMessage;
 import org.actflow.platform.engine.xstream.definition.ActionNode;
 
@@ -11,7 +10,6 @@ import org.actflow.platform.engine.xstream.definition.ActionNode;
  * @date 2016年8月19日 下午7:29:36
  * @param <T>
  */
-@Actor
 public abstract class AbstractAction implements Action<ProcessMessage> {
     
 	ActionNode actionNode;
