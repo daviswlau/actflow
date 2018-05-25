@@ -75,7 +75,7 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
     
 	private ActorSelection getActorSelection() {
 		try {
-			return actorSystem.actorSelection("/user/mainActor");
+			return actorSystem.actorSelection("/user/actEngine");
 		} catch (Exception e) {
 			return null;
 		}
@@ -306,24 +306,26 @@ public class DefaultProcessExecutor implements ProcessExecutorService {
 		try {
 			ProcessMessage message = oriMessage.clone();
 			if (actionNode != null) {
+				message.setActionId(actionNode.id);
 				Timeout timeout = new Timeout(Duration.create(EngineConstants.TIME_OUT_MILLISECONDS, TimeUnit.MILLISECONDS));
 				ActorSelection actorSelection = getActorSelection();
-//				Future<Object> future = Patterns.ask(actorSelection, message, timeout);
 				
 				ProcessMessage result = null;
-				message.setActionId(actionNode.id);
-				if (StringUtils.equals(actionNode.type, ActionTypeEnum.CLASS.getValue())) {
-					Future<Object> future = Patterns.ask(actorSelection, message, timeout);
-					result = (ProcessMessage) Await.result(future, timeout.duration());
-				}
-				if (StringUtils.equals(actionNode.type, ActionTypeEnum.BEAN.getValue())) {
-					Future<Object> future = Patterns.ask(actorSelection, message, timeout);
-					result = (ProcessMessage) Await.result(future, timeout.duration());
-				}
-				if (StringUtils.equals(actionNode.type, ActionTypeEnum.SERVICE.getValue())) {
-					Future<Object> future = Patterns.ask(actorSelection, message, timeout);
-					result = (ProcessMessage) Await.result(future, timeout.duration());
-				}
+				Future<Object> future = Patterns.ask(actorSelection, message, timeout);
+				result = (ProcessMessage) Await.result(future, timeout.duration());
+				
+//				if (StringUtils.equals(actionNode.type, ActionTypeEnum.CLASS.getValue())) {
+//					Future<Object> future = Patterns.ask(getClassActor(), message, timeout);
+//					result = (ProcessMessage) Await.result(future, timeout.duration());
+//				}
+//				if (StringUtils.equals(actionNode.type, ActionTypeEnum.BEAN.getValue())) {
+//					Future<Object> future = Patterns.ask(getBeanActor(), message, timeout);
+//					result = (ProcessMessage) Await.result(future, timeout.duration());
+//				}
+//				if (StringUtils.equals(actionNode.type, ActionTypeEnum.SERVICE.getValue())) {
+//					Future<Object> future = Patterns.ask(getServiceActor(), message, timeout);
+//					result = (ProcessMessage) Await.result(future, timeout.duration());
+//				}
 				if (result != null) {
 					message = result;
 				}

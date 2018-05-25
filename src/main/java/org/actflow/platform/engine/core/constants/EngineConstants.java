@@ -4,7 +4,7 @@ public class EngineConstants {
     
     public static final String DEFAULT_VALUE = "";
     
-    public static final int TIME_OUT_MILLISECONDS = 1000;
+    public static final long TIME_OUT_MILLISECONDS = 5000L;
     
     public static final long TIME_OUT_SECONDS = 5L;
     

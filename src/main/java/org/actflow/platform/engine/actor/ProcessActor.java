@@ -27,7 +27,6 @@ import akka.actor.UntypedActor;
  * @author Davis Lau
  *
  */
-// @Actor
 @Component("processActor")
 @Scope("prototype")
 public class ProcessActor extends UntypedActor {

@@ -8,7 +8,10 @@
  */
 package org.actflow.platform.engine.dto;
 
-import java.io.Serializable;
+import akka.routing.ConsistentHashingRouter.ConsistentHashable;
+import scala.Serializable;
+
+import java.util.UUID;
 
 import org.actflow.platform.engine.enums.MessageStatus;
 
@@ -20,10 +23,11 @@ import com.alibaba.fastjson.JSON;
  * @author Davis Lau
  * @date 2016年9月26日 上午9:56:43
  */
-public class ProcessMessage implements Cloneable, Serializable {
+public class ProcessMessage implements Cloneable, ConsistentHashable, Serializable {
 
 	private static final long serialVersionUID = 7216443258972715053L;
 
+	private String uuid;
 	// 行为
 	private String tradeCode;
 	private String id;
@@ -36,6 +40,18 @@ public class ProcessMessage implements Cloneable, Serializable {
 	private String message;
 	private String dataClass;
 	private String data;
+	
+	public ProcessMessage() {
+		this.uuid = UUID.randomUUID().toString();
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
 	/**
 	 * @return the status
@@ -199,6 +215,11 @@ public class ProcessMessage implements Cloneable, Serializable {
 	public static ProcessMessage errorMessage() {
 		return errorMessage(String.valueOf(MessageStatus.SERVER_ERROR.getStatus()),
 				MessageStatus.SERVER_ERROR.getMessage());
+	}
+
+	@Override
+	public Object consistentHashKey() {
+		return uuid + "-" + tradeCode + "-" + id + "-" + type + "-" + event + "-" + actionId;
 	}
 
 }

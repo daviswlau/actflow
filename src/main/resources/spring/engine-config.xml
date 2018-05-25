@@ -27,9 +27,10 @@
 	</bean>
 	
 	<bean id="actorBootUp" class="org.actflow.platform.engine.akkaspringfactory.ActorBootUp" init-method="init" destroy-method="shutdown">
-		<property name="routerNum" value="64" />
+		<property name="routerNum" value="16" />
 		<property name="actorSystem" ref="actorSystem" />
 		<property name="configName" value="engine.conf" />
+		<property name="dispatcher" value="engine-dispatcher"></property>
 	</bean>
 <!-- 
 	<bean id="processActor" class="org.actflow.platform.engine.akkaspringfactory.ActorFactoryBean"

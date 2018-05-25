@@ -25,7 +25,6 @@ import org.actflow.platform.engine.exception.RetryLaterException;
  * @author Davis Lau
  * @date 2016年8月23日 上午9:52:05
  */
-//@Actor
 @Component("classActor")
 @Scope("prototype")
 public class ClassActor extends AbstractActionActor {
